@@ -1,0 +1,111 @@
+{{#if showAlert}}
+<div class="alert alert-success">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	Thêm thành công
+</div>
+{{/if}}
+
+{{#section 'js'}}
+	<script type="text/javascript">
+		function checkSaveProduct(){
+			if(frmSave.ProName.value==""){
+				alert('Tên sản phẩm không trược bỏ trống!');
+				return false;
+			}
+			if(frmSave.Brand.value==""){
+				alert('Bạn phải chọn 1 thương hiệu!');
+				return false;
+			}
+			if(frmSave.Cat.value==""){
+				alert('Bạn phải chọn 1 loại sản phẩm!');
+				return false;
+			}
+			if(frmSave.Quantity.value==""){
+				alert('Số lượng không trược bỏ trống!');
+				return false;
+			}
+			if(frmSave.Price.value==""){
+				alert('Giá không được bỏ trống!');
+				return false;
+			}
+			if (IsNumeric(frmSave.Quantity.value) === false || IsNumeric(frmSave.Price.value) === false) {
+				alert('Giá trị nhập phải là số!');
+				return false;
+			}
+			return true;
+		}
+
+		function IsNumeric(input) {
+			return (input - 0) == input && (''+input).trim().length > 0;
+		}
+
+		function format_curency(a) {
+			a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+		}
+</script>
+	</script>
+{{/section}}
+
+<form action="" method="POST" enctype="multipart/form-data" role="form" id="frmSave">
+	<div class="form-group">
+		<label for="">Tên sản phẩm(<span style="color: red">*</span>)</label>
+		<input type="text" class="form-control" id="" name="ProName" placeholder="Nhập Tên sản phẩm">
+	</div>
+
+	<div class="form-group">
+		<label for="">Thương hiệu(<span style="color: red">*</span>)</label>
+		<select name="Brand" class="form-control">
+			<option value="">Chọn loại thương hiệu</option>
+				{{#each arrBrandName}}
+					<option value="{{BrandID}}">{{BrandName}}</option>
+				{{/each}}
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label for="">Loại sản phẩm (<span style="color: red">*</span>)</label>
+		<select name="Cat" class="form-control">
+			<option value="">Chọn loại sản phẩm</option>
+				{{#each arrCatName}}
+					<option value="{{CatID}}">{{CatName}}</option>
+				{{/each}}
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label for="">Số lượng(<span style="color: red">*</span>)</label>
+		<input type="text" class="form-control" id="" name="Quantity" placeholder="Nhập Số lượng">
+	</div>
+
+	<div class="form-group">
+		<label for="">Giá (VNĐ)(<span style="color: red">*</span>)</label>
+		<input onChange="format_curency(this);" type="text" class="form-control" id="Price" name="Price" placeholder="Nhập Giá">
+	</div>
+
+	<div class="form-group">
+		<label for="">Hình ảnh(<span style="color: red">*</span>)</label>
+		<input type="file" class="form-control" name="myFile" id="myFile" accept="image/*" />
+	</div>
+
+	<div class="form-group">
+		<label for="Description">Mô tả</label>
+		<div class="entry">
+			<script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
+			<div class="body">
+				<textarea name="Description" id="Description"></textarea>
+				<script>
+					CKEDITOR.replace( 'Description' );
+				</script>
+			</div>
+		</div>
+	</div>
+
+	<a class="btn btn-outline-secondary" href="/admin/product" role="button">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		View list
+	</a>
+	<button type="submit" class="btn btn-success" onclick="return checkSaveProduct()">
+		<i class="fa fa-check" id="upload" aria-hidden="true"></i>
+		Save
+	</button>
+</form>

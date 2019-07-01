@@ -1,0 +1,105 @@
+{{#with Product}}
+<form action="" method="POST" role="form" id="frmEdit">
+
+	<div class="form-group">
+		<label for="id">#</label>
+		<input type="text" class="form-control" id="id" name="ProID" value="{{ProID}}" readonly="true">
+	</div>
+	<div class="form-group">
+		<label for="ProName">Tên sản phẩm (<span style="color: red">*</span>)</label>
+		<input type="text" class="form-control" id="ProName" name="ProName" value="{{ProName}}">
+	</div>
+
+	<div class="form-group">
+		<label for="">Thương hiệu (<span style="color: red">*</span>)</label>
+		<select name="BrandID" class="form-control">
+		    <option value="{{BrandID}}" selected="selected">{{BrandName}}</option>
+			{{#each arrBrandName}}
+				<option value="{{BrandID}}">{{BrandName}}</option>
+			{{/each}}
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label for="">Loại sản phẩm (<span style="color: red">*</span>)</label>
+		<select name="CatID" class="form-control">
+		    <option value="{{CatID}}" selected="selected">{{CatName}}</option>
+			{{#each arrCatName}}
+				<option value="{{CatID}}">{{CatName}}</option>
+			{{/each}}
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label for="Quantity">Số lượng (<span style="color: red">*</span>)</label>
+		<input type="text" class="form-control" id="Quantity" name="Quantity" value="{{Quantity}}">
+	</div>
+
+	<div class="form-group">
+		<label for="Price">Giá (VNĐ) (<span style="color: red">*</span>)</label>
+		<input type="text" onChange="format_curency(this);" class="form-control" id="Price" name="Price" value="{{number_format Price}}">
+	</div>
+
+	<div class="form-group">
+		<label for="Description">Mô tả</label>
+		<div class="entry">
+			<script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
+			<div class="body">
+				<textarea name="Description" id="Description">{{Description}}</textarea>
+				<script>
+					CKEDITOR.replace( 'Description' );
+				</script>
+			</div>
+		</div>
+	</div>
+
+	<a class="btn btn-outline-secondary" href="/admin/product" role="button">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>
+		View List
+	</a>
+	<button type="submit" class="btn btn-outline-success" onclick="return checkEditProduct()">
+		<i class="fa fa-check" aria-hidden="true"></i>
+		Update
+	</button>
+</form>
+{{/with}}
+
+{{#section 'js'}}
+<script type="text/javascript">
+	function checkEditProduct(){
+		if(frmEdit.ProName.value==""){
+			alert('Tên sản phẩm không trược bỏ trống!');
+			return false;
+		}
+		if(frmEdit.Brand.value==""){
+			alert('Bạn phải chọn 1 thương hiệu!');
+			return false;
+		}
+		if(frmEdit.Cat.value==""){
+			alert('Bạn phải chọn 1 loại sản phẩm!');
+			return false;
+		}
+		if(frmEdit.Quantity.value==""){
+			alert('Số lượng không trược bỏ trống!');
+			return false;
+		}
+		if(frmEdit.Price.value==""){
+			alert('Giá không được bỏ trống!');
+			return false;
+		}
+		if (IsNumeric(frmEdit.Quantity.value) === false || IsNumeric(frmEdit.Price.value) === false) {
+			alert('Giá trị nhập phải là số!');
+			return false;
+		}
+		return true;
+	}
+
+	function format_curency(a) {
+		a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+	}
+
+	function IsNumeric(input) {
+		return (input - 0) == input && (''+input).trim().length > 0;
+	}
+</script>
+{{/section}}
