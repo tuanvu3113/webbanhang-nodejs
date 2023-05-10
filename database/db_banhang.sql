@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 10, 2023 at 08:06 AM
+-- Generation Time: May 10, 2023 at 09:10 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -41,7 +41,8 @@ INSERT INTO `brands` (`BrandID`, `BrandName`, `isdelete`) VALUES
 (1, 'Mikkor', 0),
 (2, 'Seliux', 0),
 (3, 'Targus', 0),
-(4, 'SimpleCarry', 0);
+(4, 'SimpleCarry', 0),
+(8, '33', 0);
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`CatID`, `CatName`, `isdelete`) VALUES
 (1, 'Ba lô', 0),
-(2, 'Túi xách', 0);
+(2, 'Túi xách 2', 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +154,8 @@ CREATE TABLE `orders` (
   `UserID` int(11) NOT NULL,
   `Address` varchar(50) NOT NULL,
   `Total` bigint(20) NOT NULL,
-  `Phone` varchar(20) NOT NULL
+  `Phone` varchar(20) NOT NULL,
+  `isdelete` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -239,7 +241,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('0q-dRDo6ZPOp15z8HRgTVWpDgz0Ktz7P', 1683785186, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"isLogged\":false}');
+('0q-dRDo6ZPOp15z8HRgTVWpDgz0Ktz7P', 1683788997, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"isLogged\":true,\"user\":{\"f_ID\":1,\"f_Username\":\"admin\",\"f_Password\":\"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\",\"f_Name\":\"Hoàng Thu Hằng\",\"f_Email\":\"hangmoon322@gmail.com\",\"f_DOB\":\"1997-12-24T17:00:00.000Z\",\"f_Permission\":1,\"isdelete\":0},\"cart\":[]}');
 
 -- --------------------------------------------------------
 
@@ -254,16 +256,17 @@ CREATE TABLE `users` (
   `f_Name` varchar(50) NOT NULL,
   `f_Email` varchar(50) NOT NULL,
   `f_DOB` date NOT NULL,
-  `f_Permission` int(11) NOT NULL
+  `f_Permission` int(11) NOT NULL,
+  `isdelete` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`f_ID`, `f_Username`, `f_Password`, `f_Name`, `f_Email`, `f_DOB`, `f_Permission`) VALUES
-(1, 'admin', 'webbanhang', 'Hoàng Thu Hằng', 'hangmoon322@gmail.com', '1997-12-25', 1),
-(2, 'khachhang', 'khachhang123', 'Đỗ Linh Chi', 'linhchi4ever@gmail.com', '1997-10-20', 0);
+INSERT INTO `users` (`f_ID`, `f_Username`, `f_Password`, `f_Name`, `f_Email`, `f_DOB`, `f_Permission`, `isdelete`) VALUES
+(1, 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Hoàng Thu Hằng', 'hangmoon322@gmail.com', '1997-12-25', 1, 0),
+(2, 'khachhang', 'khachhang123', 'Đỗ Linh Chi', 'linhchi4ever@gmail.com', '1997-10-20', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -325,7 +328,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `BrandID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `BrandID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `categories`
