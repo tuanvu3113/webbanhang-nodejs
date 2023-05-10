@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 10, 2023 at 09:10 AM
+-- Generation Time: May 10, 2023 at 09:13 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -139,7 +139,9 @@ CREATE TABLE `orderdetails` (
   `ProID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Price` bigint(20) NOT NULL,
-  `Amount` int(11) NOT NULL
+  `Amount` int(11) NOT NULL,
+  `ProName` varchar(255) NOT NULL,
+  `isdelete` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -157,6 +159,13 @@ CREATE TABLE `orders` (
   `Phone` varchar(20) NOT NULL,
   `isdelete` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`OrderID`, `OrderDate`, `UserID`, `Address`, `Total`, `Phone`, `isdelete`) VALUES
+(1, '2023-05-10 14:12:36', 2, '', 299000, '123', 0);
 
 -- --------------------------------------------------------
 
@@ -184,7 +193,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`ProID`, `ProName`, `Description`, `Price`, `Quantity`, `Viewer`, `Sold`, `Date`, `CatID`, `BrandID`, `isdelete`) VALUES
 (1, 'Túi Xách Seliux G3 Widow Duffle M D.Grey', 'Seliux G3 Widow Duffle M D.Grey là dòng sản phẩm túi xách thể thao – du lịch của thương hiệu Seliux. Túi xách Seliux G3 Widow Duffle M thích hợp cho các bạn thường xuyên hoạt động thể thao hoặc đi du lịch/ công tác ngắn ngày chỉ cần đem theo ít đồ. Túi được làm từ chất liệu G1000 và lớp vải lót 210D Nylon hạn chế thấm nước tốt. Túi có kiểu dáng năng động, màu sắc hiện đại, đặc biệt có ngăn đựng giày được thiết kế riêng biệt.', 569000, 10, 100, 2, '2023-05-10 13:03:19', 2, 2, 0),
-(2, 'Túi Xách Seliux M5 Grant S Red', 'Seliux M5 Grant S Red là dòng sản phẩm túi đeo chéo cao cấp, thời trang phù hợp cho iPad Air. Túi có 4 màu sắc thời trang, thiết kế tiện lợi với dây quai to bản thay đổi chiều dài linh hoạt, nhiều ngăn dễ dàng sử dụng. Túi Seliux M5 Grant S được làm từ chất liệu 1000D Checken Tex SupremeTM bền màu, khả năng kháng nước tốt.', 299000, 5, 50, 2, '2023-05-10 13:03:19', 2, 2, 0),
+(2, 'Túi Xách Seliux M5 Grant S Red', 'Seliux M5 Grant S Red là dòng sản phẩm túi đeo chéo cao cấp, thời trang phù hợp cho iPad Air. Túi có 4 màu sắc thời trang, thiết kế tiện lợi với dây quai to bản thay đổi chiều dài linh hoạt, nhiều ngăn dễ dàng sử dụng. Túi Seliux M5 Grant S được làm từ chất liệu 1000D Checken Tex SupremeTM bền màu, khả năng kháng nước tốt.', 299000, 4, 50, 2, '2023-05-10 13:03:19', 2, 2, 0),
 (3, 'Túi Xách Seliux F10 Skynight Messenger M Navy', 'Seliux F10 Skynight Messenger M Navy là dòng túi xách Laptop thời trang, cao cấp của thương hiệu Seliux. Túi xách thích hợp cho Laptop 13’’ trở xuống, linh hoạt sử dụng trong các môi trường hoạt động khác nhau. Kiểu dáng năng động, màu sắc cá tính, làm từ chất liệu vải 1000D Chicken Tex, mặt đáy bằng Tapaulin hạn chế thấm nước rất tốt.', 399000, 8, 70, 5, '2023-05-10 13:03:19', 2, 2, 0),
 (4, 'Túi Xách Seliux M1 Abrams S Red/Black', 'Những chàng trai luôn có cho mình những bí quyết riêng để tự tin tỏa sáng khi đi ra ngoài. Người chọn cho mình chiếc đồng hồ đeo tay đắt giá, người trung thành với đôi giày da yêu thích sang trọng, và không ít phái mạnh chọn cách bổ sung cho mình một chiếc túi đựng ipad, túi đeo chéo thời trang đẳng cấp. Túi đeo chéo Seliux M1 Abrams S Red/Black kết hợp giữa tông màu đỏ và màu đen cùng điếm nhấn là logo nổi bật, sắc nét, gây ấn tượng cho người dùng từ cái nhìn đầu tiên.', 219000, 15, 110, 7, '2023-05-10 13:03:19', 2, 2, 0),
 (5, 'Túi Xách Seliux Túi xách Ipad Exos 4004 M Brown', 'Túi xách iPad Seliux Exos 4002 (M) Brown là mẫu mới nhất trong bộ sưu tập của dòng thương hiệu Seliux độc quyền. Thiết kế độc đáo, ấn tượng, thể hiện sự đơn giản cùng các điểm nhấn nổi bật rất trẻ trung và năng động. ', 599000, 20, 150, 12, '2023-05-10 13:03:19', 2, 2, 0),
@@ -241,7 +250,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('0q-dRDo6ZPOp15z8HRgTVWpDgz0Ktz7P', 1683788997, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"isLogged\":true,\"user\":{\"f_ID\":1,\"f_Username\":\"admin\",\"f_Password\":\"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\",\"f_Name\":\"Hoàng Thu Hằng\",\"f_Email\":\"hangmoon322@gmail.com\",\"f_DOB\":\"1997-12-24T17:00:00.000Z\",\"f_Permission\":1,\"isdelete\":0},\"cart\":[]}');
+('0q-dRDo6ZPOp15z8HRgTVWpDgz0Ktz7P', 1683789224, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"isLogged\":true,\"user\":{\"f_ID\":2,\"f_Username\":\"khachhang\",\"f_Password\":\"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\",\"f_Name\":\"Đỗ Linh Chi\",\"f_Email\":\"linhchi4ever@gmail.com\",\"f_DOB\":\"1997-10-19T17:00:00.000Z\",\"f_Permission\":0,\"isdelete\":0},\"cart\":[]}');
 
 -- --------------------------------------------------------
 
@@ -266,7 +275,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`f_ID`, `f_Username`, `f_Password`, `f_Name`, `f_Email`, `f_DOB`, `f_Permission`, `isdelete`) VALUES
 (1, 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Hoàng Thu Hằng', 'hangmoon322@gmail.com', '1997-12-25', 1, 0),
-(2, 'khachhang', 'khachhang123', 'Đỗ Linh Chi', 'linhchi4ever@gmail.com', '1997-10-20', 0, 0);
+(2, 'khachhang', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Đỗ Linh Chi', 'linhchi4ever@gmail.com', '1997-10-20', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -352,7 +361,7 @@ ALTER TABLE `orderdetails`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`
